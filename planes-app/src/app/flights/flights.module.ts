@@ -4,14 +4,18 @@ import { FlightsComponent } from './flights.component';
 import { MaterialModule } from '../material/material.module';
 import { FlightCardComponent } from './flight-card/flight-card.component';
 import { NewFlightComponent } from './new-flight/new-flight.component';
+import { FlightFormComponent } from './flight-form/flight-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [NewFlightComponent],
-  declarations: [FlightsComponent, FlightCardComponent, NewFlightComponent],
+  declarations: [FlightsComponent, FlightCardComponent, NewFlightComponent, FlightFormComponent],
   exports: [FlightsComponent]
 })
 export class FlightsModule { }
