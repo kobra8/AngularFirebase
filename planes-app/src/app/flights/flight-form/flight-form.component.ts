@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { Crew } from '../../models/flight.model';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Crew, Flight } from '../../models/flight.model';
 
 @Component({
   selector: 'app-flight-form',
@@ -9,6 +9,7 @@ import { Crew } from '../../models/flight.model';
 })
 export class FlightFormComponent implements OnInit {
 
+  @Input() editMode = false;
   form: FormGroup;
   jobs = [
     {label: 'Stewardess', value: 'stewardes'},
@@ -26,10 +27,10 @@ export class FlightFormComponent implements OnInit {
     this.buildForm();
   }
 
-  buildCrewMember() {
+  buildCrewMember(crewMember: Crew = {} as Crew) {
     return this.formBuilder.group({
-      name: '',
-      job: ''
+      name: crewMember.name || '',
+      job: crewMember.job || ''
     });
   }
 
@@ -37,26 +38,34 @@ export class FlightFormComponent implements OnInit {
     return this.form.get('crew') as FormArray;
   }
 
-  removeCrewMember (index) {
+  removeCrewMember (index: number) {
     this.crew.removeAt(index);
   }
 
-  addCrewMember() {
-    this.crew.push(this.buildCrewMember());
-    console.log(this.form);
+  addCrewMember(crewMember?: Crew) {
+    this.crew.push(this.buildCrewMember(crewMember));
   }
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      code: '',
-      origin: '',
-      destination: '',
-      departureTime: '',
-      returnTime: '',
+      code: ['SK', { validators: [Validators.required, Validators.minLength(4), Validators.maxLength(7)] }],
+      origin: ['', { validators: [Validators.required] }],
+      destination: ['', { validators: [Validators.required] }],
+      departureTime: ['', { validators: [Validators.required] }],
+      returnTime: ['', { validators: [Validators.required] }],
       additionalInformation: '',
       withSKPlanesDiscount: false,
-      crew: this.formBuilder.array([this.buildCrewMember()])
+      crew: this.formBuilder.array(this.editMode ? [] : [this.buildCrewMember()])
     });
+  }
+
+  setFlight(flight: Flight) {
+    const {key, ...formData } = flight;
+    this.form.patchValue(formData);
+    console.log('Set flight fired');
+    if (formData.crew) {
+      formData.crew.forEach(crewMember => this.addCrewMember(crewMember));
+    }
   }
 
 }

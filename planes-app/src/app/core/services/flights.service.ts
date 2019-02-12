@@ -11,12 +11,29 @@ export class FlightsService {
   private API_URL = '/flights';
 
   constructor(
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase // Firebase is implemented with websocket (no Http Rest client used)
   ) { }
+
+  addFlight(flight: Flight) {
+    return this.db.list<Flight>(this.API_URL).push(flight);
+  }
 
   getFlights(): Observable<Flight[]> {
     return this.db.list<Flight>(this.API_URL).snapshotChanges()
     .pipe(map(response => response.map(flight => this.assignKey(flight))));
+  }
+
+  getFlight(key: string): Observable<Flight> {
+    return this.db.object<Flight>(`${this.API_URL}/${key}`).snapshotChanges()
+    .pipe(map(flight => this.assignKey(flight)));
+  }
+
+  sendEdited(key: string, flight: Flight) {
+    return this.db.object<Flight>(`${this.API_URL}/${key}`).update(flight);
+  }
+
+  removeFlight(key: string) {
+    return this.db.object<Flight>(`${this.API_URL}/${key}`).remove();
   }
 
   private assignKey(flight) {

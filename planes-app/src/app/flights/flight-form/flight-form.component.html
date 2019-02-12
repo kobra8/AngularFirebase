@@ -2,7 +2,11 @@
   <div class="row">
     <div class="col-sm-8">
       <mat-form-field>
-        <input matInput formControlName="code" placeholder="Code">
+        <input matInput formControlName="code" placeholder="Code" #codeInput>
+        <mat-error *ngIf="form.get('code').hasError('required')">Code is required</mat-error>
+        <mat-error *ngIf="form.get('code').hasError('minlength')">Minimum length is 4 chars</mat-error>
+        <mat-error *ngIf="form.get('code').hasError('maxlength')">Maximum length is 7 chars</mat-error>
+        <mat-hint align="end">{{codeInput.value.length}} / 7 </mat-hint>
       </mat-form-field>
     </div>
   </div>
@@ -10,11 +14,13 @@
     <div class="col-sm-4">
       <mat-form-field>
         <input matInput formControlName="origin" placeholder="Origin">
+        <mat-error>Origin is required</mat-error>
       </mat-form-field>
     </div>
     <div class="col-sm-4">
       <mat-form-field>
         <input matInput formControlName="destination" placeholder="Destination">
+        <mat-error>Destination is required</mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -22,11 +28,13 @@
     <div class="col-sm-4">
       <mat-form-field>
         <input matInput formControlName="departureTime" placeholder="Departure time">
+        <mat-error>Departure time is required</mat-error>
       </mat-form-field>
     </div>
     <div class="col-sm-4">
       <mat-form-field>
         <input matInput formControlName="returnTime" placeholder="Return time">
+        <mat-error>Return time is required</mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -64,10 +72,10 @@
       </div>
     </div>
   </div>
-    <div class="row">
+    <div class="row pt-3">
       <div class="col">
         <button mat-raised-button color="primary" (click)="addCrewMember()">Add crew member</button>
       </div>
     </div>
 </form>
-<pre>{{ form.value | json}}</pre>
+<!-- <pre>{{ form.value | json}}</pre> -->

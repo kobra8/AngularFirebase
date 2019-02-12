@@ -1,1 +1,21 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.toast-success {
+  background: rgb(22, 88, 22);
+}
+
+.toast-error {
+  background: rgb(196, 30, 30);
+}
+
+.close {
+  cursor: pointer;
+}
+
+.footer-btn {
+  margin-right: 10px!important;
+}
+
+body {
+  background: #e8ebee;
+}

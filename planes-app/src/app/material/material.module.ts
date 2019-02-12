@@ -11,8 +11,16 @@ import {
   MatSelectModule,
   MatToolbarModule,
   MatDialogConfig,
-  MAT_DIALOG_DEFAULT_OPTIONS
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarConfig
 } from '@angular/material';
+
+const MAT_SNACKBAR_GLOBAL_CONFIG: MatSnackBarConfig = {
+  duration: 2500,
+  verticalPosition: 'bottom',
+  horizontalPosition: 'center'
+};
 
 const MAT_DIALOG_GLOBAL_CONFIG: MatDialogConfig = {
   width: '700px',
@@ -37,7 +45,8 @@ const MATERIAL_MODULES = [
   exports: [...MATERIAL_MODULES],
   declarations: [],
   providers: [
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: MAT_DIALOG_GLOBAL_CONFIG }
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: MAT_DIALOG_GLOBAL_CONFIG },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: MAT_SNACKBAR_GLOBAL_CONFIG }
   ]
 })
 export class MaterialModule { }
