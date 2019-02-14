@@ -2,10 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserInfo } from 'firebase';
 
+export interface Credentials {
+  email: string;
+  password: string;
+}
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  readonly authState$ = this.fireAuth.authState;
   private userData: UserInfo;
 
   constructor(
@@ -13,9 +18,15 @@ export class AuthService {
   ) {
 
   }
-  login(credentials: {email: string, password: string}) {
+
+  login(credentials: Credentials) {
     return this.fireAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)
     .then(userCredential => this.userData = userCredential.user);
+  }
+
+  register(credentials: Credentials) {
+    return this.fireAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(credentials.email, credentials.password)
+
   }
 
   logout() {

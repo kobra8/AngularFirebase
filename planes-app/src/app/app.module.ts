@@ -10,7 +10,6 @@ import { environment } from '../environments/environment';
 import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { FlightsModule } from './flights/flights.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -25,8 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     MaterialModule,
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
-    FlightsModule
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
